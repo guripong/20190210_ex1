@@ -1,8 +1,16 @@
+///////////////////////////////////////////
+/*
+ require('뭐시기');
+ #include <"http-erros">
+ 미리 만들어진 많은 코드
+ 
+*/
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+/////////////////////////////////////////////////
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -37,5 +45,15 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
+const port =3000;
+const myip ="0.0.0.0";
+
+app.listen(port,myip, function(){
+	console.log('listening'+port+' port!!!');		
+});
+
+
 
 module.exports = app;
