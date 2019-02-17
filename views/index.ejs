@@ -1,35 +1,124 @@
 <!DOCTYPE html>
 <!-- html 을 시작합니다  -->
-<html>  
-  <!-- 이 html에 대한 정의 초기설정 등등-->
-  <head>
-    <title>MyPage</title> <!--  타이틀  -->
-    <link rel='stylesheet' href='/stylesheets/style.css' /> <!--스타일 정의문서를 포함하는방법-->
-  </head>
-  <!--끝났어-->
- 
+<html>
+<!-- 이 html에 대한 정의 초기설정 등등-->
+
+<head>
+  <title>MyPage</title> <!--  타이틀  -->
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <script src='/javascripts/jquery.3.1.min.js'></script>
+ <!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>-->
+  <!--스타일 정의문서를 포함하는방법-->
+</head>
+<!--끝났어-->
 
 
-  <body>
+<body>
 
-    <div style="font-size:50px; color:#FFFFFF; background-color:#D77F6E; width:100%;">
-      <div style="width:50%;background-color:#58ff62;">
-      12345
-     </div>
-
-      <div style="width:50%">
-        56789
-      </div>   
-      <div>
-        <img src='/images/mycat.png'/>
-      </div>  
+  <div id='div_wrapper' class="div_wrapper">
+    <div class="div_1">
+      1234544
     </div>
 
-    <div>
-      가나달마바사
+    <div style="width:50%">
+      56789
     </div>
 
-  </body>
+    <div style="text-align:center; background-color:red; "> 
+      <img id='img1' src='/images/mycat.png' style="transform:rotate(0deg);" />
+    </div>
+
+  </div>
+
+  <div>
+    가나달마바사
+    <input id='button1' type="button" value="이미지 이동+10"/>
+    
+    <button>버튼이야 이거도</button>
+
+  </div>
+
+  <script>
+    var img1state=0;
+
+
+    function rotate_img(direction){
+      if(direction=='r')
+      {
+        if(img1state==0){//0
+            $('#img1').css("transform","rotate(90deg)").animate();  
+            img1state=1;  
+        }
+        else if(img1state==1){//90
+          $('#img1').css("transform","rotate(180deg)"); 
+          img1state=2;      
+        }
+        else if(img1state==2){//180
+          $('#img1').css("transform","rotate(270deg)");   
+          img1state=3;    
+        }
+        else if(img1state==3){//270
+          $('#img1').css("transform","rotate(0deg)"); 
+          img1state=0;         
+        }
+       
+      }
+      else{
+        //alert(img1state);
+        if(img1state==0){//0
+            $('#img1').css("transform","rotate(270deg)");    //state3
+            img1state=3;
+        }
+        else if(img1state==1){//90
+          $('#img1').css("transform","rotate(0deg)");      //state0
+          img1state=0; 
+        }
+        else if(img1state==2){//180
+          $('#img1').css("transform","rotate(90deg)");   //state1
+          img1state=1;//90    
+        }
+        else if(img1state==3){//270
+          $('#img1').css("transform","rotate(180deg)"); //state2    
+          img1state=2;  
+        }
+        
+        
+      }
+
+    }
+
+
+    //버튼눌렀을때
+    $('#button1').click(function(){
+       rotate_img('r');
+    });
+    
+
+    ////////////키눌렀을때
+    $(document).keydown(function (e) {
+        //-> 39
+        //<- 37
+        if (e.keyCode == 39) {
+          //우측
+          rotate_img('r');
+
+        }
+        else if (e.keyCode == 37) {
+          rotate_img('l');
+        }
+      });
+
+
+
+    /*
+    $('#div_wrapper').click(function(){
+      alert('hihi click div_wrapper');
+    });
+    */
+  </script>
+
+
+</body>
 
 
 </html>
