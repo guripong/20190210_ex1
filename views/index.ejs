@@ -7,6 +7,8 @@
   <title>MyPage</title> <!--  타이틀  -->
   <link rel='stylesheet' href='/stylesheets/style.css' />
   <script src='/javascripts/jquery.3.1.min.js'></script>
+  <script src="/javascripts/jquery-animate-css-rotate-scale.js" type="text/javascript"></script>
+
  <!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>-->
   <!--스타일 정의문서를 포함하는방법-->
 </head>
@@ -30,74 +32,90 @@
 
   </div>
 
-  <div>
+  <div id='a1' style="background-color:blue;">
     가나달마바사
-    <input id='button1' type="button" value="이미지 이동+10"/>
-    
-    <button>버튼이야 이거도</button>
+    <input id='button1' type="button" value="이미지 회전 오른쪽"  style="background-color:red;"/>
+    <input id='button2' type="button" value="이미지 회전 왼쪽"/>
 
+    <button id='fix_deg'>각도 수정</button>
+    <input id='deg_val' type='text' value='0'>
+<!--  saasfsafv  v-->
   </div>
 
   <script>
-    var img1state=0;
 
+    var toggle=1;
+    $(document).on('click','#a1',function(){
+      console.log('하하');
 
-    function rotate_img(direction){
-      if(direction=='r')
-      {
-        if(img1state==0){//0
-            $('#img1').css("transform","rotate(90deg)").animate();  
-            img1state=1;  
-        }
-        else if(img1state==1){//90
-          $('#img1').css("transform","rotate(180deg)"); 
-          img1state=2;      
-        }
-        else if(img1state==2){//180
-          $('#img1').css("transform","rotate(270deg)");   
-          img1state=3;    
-        }
-        else if(img1state==3){//270
-          $('#img1').css("transform","rotate(0deg)"); 
-          img1state=0;         
-        }
-       
+      if(toggle==1){
+      $('#a1').css('background-color','rgb(100,100,100)');
+      toggle=0;
       }
       else{
-        //alert(img1state);
-        if(img1state==0){//0
-            $('#img1').css("transform","rotate(270deg)");    //state3
-            img1state=3;
-        }
-        else if(img1state==1){//90
-          $('#img1').css("transform","rotate(0deg)");      //state0
-          img1state=0; 
-        }
-        else if(img1state==2){//180
-          $('#img1').css("transform","rotate(90deg)");   //state1
-          img1state=1;//90    
-        }
-        else if(img1state==3){//270
-          $('#img1').css("transform","rotate(180deg)"); //state2    
-          img1state=2;  
-        }
-        
-        
+        $('#a1').css('background-color','rgb(200,200,200)');
+        toggle=1;
       }
+    });
 
+    function getRotationDegrees(obj) {
+        var matrix = obj.css("-webkit-transform") ||
+        obj.css("-moz-transform")    ||
+        obj.css("-ms-transform")     ||
+        obj.css("-o-transform")      ||
+        obj.css("transform");
+        if(matrix !== 'none') {
+            var values = matrix.split('(')[1].split(')')[0].split(',');
+            var a = values[0];
+            var b = values[1];
+            var angle = Math.round(Math.atan2(b, a) * (180/Math.PI));
+        } else { var angle = 0; }
+        return (angle < 0) ? angle + 360 : angle;
     }
 
 
-    //버튼눌렀을때
-    $('#button1').click(function(){
-       rotate_img('r');
+    var ok=1;
+    function rotate_img(direction){
+      if(ok==1){
+        ok=0;   
+        if(direction=='r')
+        {
+            $('#img1').animate({rotate: '+=90deg'},500,function(){
+               ok=1; 
+               $('#deg_val').val(getRotationDegrees($('#img1')));
+            });
+        }
+        else{
+            $('#img1').animate({rotate: '-=90deg'},500,function(){
+               ok=1;
+               $('#deg_val').val(getRotationDegrees($('#img1')));
+            });
+        }
+      }
+    }
+
+    $(document).on('click','#button1',function(){
+      rotate_img('r');
     });
-    
+    $(document).on('click','#button2',function(){
+      rotate_img('l');
+    });
+    $(document).on('click','#fix_deg',function(){
+      if(ok==1){
+
+        ok=0;
+        var newdeg= $('#deg_val').val();
+        $('#img1').animate({rotate:newdeg},500,function(){
+          ok=1;
+        }) 
+      }
+
+    });
 
     ////////////키눌렀을때
     $(document).keydown(function (e) {
         //-> 39
-        //<- 37
+        //<- 37        
         if (e.keyCode == 39) {
           //우측
           rotate_img('r');
@@ -109,12 +127,8 @@
       });
 
 
+      
 
-    /*
-    $('#div_wrapper').click(function(){
-      alert('hihi click div_wrapper');
-    });
-    */
   </script>
 
 
