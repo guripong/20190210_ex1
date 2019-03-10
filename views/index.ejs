@@ -16,6 +16,17 @@
 
 
 <body>
+  <div class="menubar">
+   <div class='mini_menu' style='left:50px;'>안녕</div>
+   <div class='mini_menu' style='left:150px;'>안녕2</div>
+   <div class='mini_menu' style='left:250px;'>안녕3</div>
+  </div>
+
+
+  <div>
+    <input class="a123" type='button' value="훔쳤어"/>
+  </div>
+
 
   <div id='div_wrapper' class="div_wrapper">
     <div class="div_1">
@@ -42,15 +53,19 @@
 <!--  saasfsafv  v-->
   </div>
 
+
+
   <script>
 
+
     var toggle=1;
+    //136,133,164
     $(document).on('click','#a1',function(){
       console.log('하하');
 
       if(toggle==1){
-      $('#a1').css('background-color','rgb(100,100,100)');
-      toggle=0;
+        $('#a1').css('background-color','rgb(136,133,164)');
+       toggle=0;
       }
       else{
         $('#a1').css('background-color','rgb(200,200,200)');
@@ -74,25 +89,24 @@
     }
 
 
-    var ok=1;
-    function rotate_img(direction){
-      if(ok==1){
-        ok=0;   
-        if(direction=='r')
-        {
-            $('#img1').animate({rotate: '+=90deg'},500,function(){
-               ok=1; 
-               $('#deg_val').val(getRotationDegrees($('#img1')));
+      var ok = 1;
+      function rotate_img(direction) {
+        if (ok == 1) {
+          ok = 0;
+          if (direction == 'r') {
+            $('#img1').animate({ rotate: '+=90deg' }, 500, function () {
+              ok = 1;
+              $('#deg_val').val(getRotationDegrees($('#img1')));
             });
-        }
-        else{
-            $('#img1').animate({rotate: '-=90deg'},500,function(){
-               ok=1;
-               $('#deg_val').val(getRotationDegrees($('#img1')));
+          }
+          else {
+            $('#img1').animate({ rotate: '-=90deg' }, 500, function () {
+              ok = 1;
+              $('#deg_val').val(getRotationDegrees($('#img1')));
             });
+          }
         }
       }
-    }
 
     $(document).on('click','#button1',function(){
       rotate_img('r');
